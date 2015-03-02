@@ -1,0 +1,122 @@
+
+<html>
+<head>
+  <title>Bullshit-O-Meter</title>
+  <style type="text/css">
+    body {
+      background: #222;
+    }
+    .wrapper {
+      margin: 30px auto;
+      width: 200px;
+    }
+    .wrapper .bullshit-o-meter {
+      width: 200px;
+      height: 100px;
+      background: #666;
+      border-radius: 200px 200px 0 0;
+      position: relative;
+    }
+    .wrapper .bullshit-o-meter .pointer {
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+    .wrapper .bullshit-o-meter .pointer .after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 30px;
+      border-radius: 40px 40px 0 0;
+      background: #333;
+      position: absolute;
+      bottom: -10px;
+      left: -30px;
+    }
+    .wrapper .bullshit-o-meter .pointer .before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: -8px;
+      bottom: -10px;
+      width: 0px;
+      height: 0px;
+      -webkit-transform-origin: center 80px;
+      -ms-transform-origin: center 80px;
+      transform-origin: center 80px;
+      -webkit-transition-duration: 1s;
+      transition-duration: 0.5s;
+      -webkit-animation: roll 3s alternate infinite;
+      animation: roll 3s alternate infinite;
+    }
+    .title {
+      width: "100%";
+      text-align: center;
+      color: white;
+    }
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+
+      border-bottom: 100px solid #600;
+      border-radius: 50%;
+    }
+    /*
+    @keyframes roll {
+      from {
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
+      to {
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
+    */
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="bullshit-o-meter">
+      <div class="pointer">
+        <div id="bullshit-o-meter" class="before arrow"></div>
+        <div class="after"></div>
+      </div>
+    </div>
+  </div>
+  <h1 class="title"> Bullshit-O-Meter</h1>
+
+  <script type="text/javascript">
+    var elem = document.getElementById('bullshit-o-meter'), lastAnim = null, delay = 200;
+    function transformFunc(){
+      var degree = Math.random() * 90, neg = Math.random() < 0.5;
+      elem.style.transform = 'rotate(' + (neg ? -degree : degree) + 'deg)';
+    }
+    if (window.requestAnimationFrame) {
+      var reAnimFunc = function(){
+        window.requestAnimationFrame(animFunc);
+      },
+      animFunc = function(timestamp){
+        if (!lastAnim) lastAnim = timestamp;
+        if (timestamp - lastAnim > delay) {
+          lastAnim = timestamp;
+          transformFunc();
+        }
+        setTimeout(reAnimFunc ,delay);
+      };
+      window.requestAnimationFrame(animFunc);
+    } else {
+      setInterval(transformFunc, delay);
+    }
+  </script>
+</body>
+</html>
